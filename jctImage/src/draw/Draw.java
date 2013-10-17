@@ -28,8 +28,6 @@ public class Draw
         if (this.type != ImageType.BITMAP)
             return;
         ColorImage img = (ColorImage) draw_obj;
-        if (x0 < 0 || y0 < 0 || x1 < 0 || y1 < 0 || x0 > img.width || x1 > img.width || y0 > img.hight || y1 > img.hight)
-            return;
         dx = Math.abs(x1 - x0);
         dy = Math.abs(y1 - y0);
         if (x0 < x1)
@@ -69,5 +67,52 @@ public class Draw
                 y0 += sy;
             }
         }
+    }
+
+    public void DrawRectangle(int x0, int y0, int x1, int y1, ARGB argb)
+    {
+        int _x0, _y0, _x1, _y1;
+        if (x0 < x1)
+        {
+            _x0 = x0;
+            _x1 = x1;
+        }
+        else
+        {
+            _x0 = x1;
+            _x1 = x0;
+        }
+        if (y0 < y1)
+        {
+            _y0 = y0;
+            _y1 = y1;
+        }
+        else
+        {
+            _y0 = y1;
+            _y1 = y0;
+        }
+        for (int i = _x0; i < _x1; i++)
+            if (this.type == ImageType.BITMAP)
+            {
+                ((ColorImage) this.draw_obj).SetPixel(_y0, i, argb);
+                ((ColorImage) this.draw_obj).SetPixel(_y1, i, argb);
+            }
+            else
+            {
+                ((ColorImage) this.draw_obj).SetPixel(i, _y0, argb);
+                ((ColorImage) this.draw_obj).SetPixel(i, _y1, argb);
+            }
+        for (int i = _y0; i < _y1; i++)
+            if (this.type == ImageType.BITMAP)
+            {
+                ((ColorImage) this.draw_obj).SetPixel(i, _x0, argb);
+                ((ColorImage) this.draw_obj).SetPixel(i, _x1, argb);
+            }
+            else
+            {
+                ((ColorImage) this.draw_obj).SetPixel(_x0, i, argb);
+                ((ColorImage) this.draw_obj).SetPixel(_x1, i, argb);
+            }
     }
 }

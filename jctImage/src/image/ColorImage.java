@@ -25,7 +25,8 @@ public class ColorImage extends Image
 
     public void SetPixel(int x, int y, ARGB argb)
     {
-        this.matrix[x][y] = argb;
+        if (0 <= x && x < this.hight && 0 <= y && y < this.width)
+            this.matrix[x][y] = argb;
     }
 
     private void Create(int h, int w)
