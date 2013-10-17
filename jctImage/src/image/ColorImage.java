@@ -28,6 +28,13 @@ public class ColorImage extends Image
         if (0 <= x && x < this.hight && 0 <= y && y < this.width)
             this.matrix[x][y] = argb;
     }
+    
+    public ARGB GetPixel(int x, int y)
+    {
+        if (0 <= x && x < this.hight && 0 <= y && y < this.width)
+            return this.matrix[x][y];
+        return null;
+    }
 
     private void Create(int h, int w)
     {

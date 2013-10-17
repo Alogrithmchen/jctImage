@@ -1,5 +1,6 @@
 package draw;
 
+import java.util.Stack;
 import image.Bitmap;
 import image.ColorImage;
 import color.ARGB;
@@ -72,6 +73,7 @@ public class Draw
     public void DrawRectangle(int x0, int y0, int x1, int y1, ARGB argb)
     {
         int _x0, _y0, _x1, _y1;
+        ColorImage img = ((ColorImage) this.draw_obj);
         if (x0 < x1)
         {
             _x0 = x0;
@@ -95,19 +97,19 @@ public class Draw
         for (int i = _x0; i < _x1; i++)
             if (this.type == ImageType.BITMAP)
             {
-                ((ColorImage) this.draw_obj).SetPixel(_y0, i, argb);
-                ((ColorImage) this.draw_obj).SetPixel(_y1, i, argb);
+                img.SetPixel(_y0, i, argb);
+                img.SetPixel(_y1, i, argb);
             }
             else
             {
-                ((ColorImage) this.draw_obj).SetPixel(i, _y0, argb);
-                ((ColorImage) this.draw_obj).SetPixel(i, _y1, argb);
+                img.SetPixel(i, _y0, argb);
+                img.SetPixel(i, _y1, argb);
             }
         for (int i = _y0; i < _y1; i++)
             if (this.type == ImageType.BITMAP)
             {
-                ((ColorImage) this.draw_obj).SetPixel(i, _x0, argb);
-                ((ColorImage) this.draw_obj).SetPixel(i, _x1, argb);
+                img.SetPixel(i, _x0, argb);
+                img.SetPixel(i, _x1, argb);
             }
             else
             {
@@ -115,4 +117,43 @@ public class Draw
                 ((ColorImage) this.draw_obj).SetPixel(_x1, i, argb);
             }
     }
+
+    public void Fill(int x, int y, ARGB argb)
+    {
+        ColorImage img = ((ColorImage) this.draw_obj);
+        Stack<Integer> xs = new Stack<Integer>();
+        Stack<Integer> ys = new Stack<Integer>();
+        ARGB old = img.GetPixel(x, y);
+        xs.push(x);
+        ys.push(y);
+        if (argb == old)
+            return;
+        while (!xs.isEmpty() && !ys.isEmpty())
+        {
+            int _x = xs.pop();
+            int _y = ys.pop();
+            img.SetPixel(_x, _y, argb);
+            if (img.GetPixel(_x - 1, _y) == old)
+            {
+                xs.push(_x - 1);
+                ys.push(_y);
+            }
+            if (img.GetPixel(_x, _y - 1) == old)
+            {
+                xs.push(_x);
+                ys.push(_y - 1);
+            }
+            if (img.GetPixel(_x + 1, _y) == old)
+            {
+                xs.push(_x + 1);
+                ys.push(_y);
+            }
+            if (img.GetPixel(_x, _y + 1) == old)
+            {
+                xs.push(_x);
+                ys.push(_y + 1);
+            }
+        }
+    }
+
 }
