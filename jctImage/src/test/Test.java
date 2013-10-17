@@ -1,5 +1,6 @@
-package image;
+package test;
 
+import image.Bitmap;
 import color.ARGB;
 import draw.Draw;
 
