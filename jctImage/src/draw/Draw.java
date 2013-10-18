@@ -73,7 +73,6 @@ public class Draw
     public void DrawRectangle(int x0, int y0, int x1, int y1, ARGB argb)
     {
         int _x0, _y0, _x1, _y1;
-        ColorImage img = ((ColorImage) this.draw_obj);
         if (x0 < x1)
         {
             _x0 = x0;
@@ -95,27 +94,66 @@ public class Draw
             _y1 = y0;
         }
         for (int i = _x0; i < _x1; i++)
-            if (this.type == ImageType.BITMAP)
-            {
-                img.SetPixel(_y0, i, argb);
-                img.SetPixel(_y1, i, argb);
-            }
-            else
-            {
-                img.SetPixel(i, _y0, argb);
-                img.SetPixel(i, _y1, argb);
-            }
+        {
+            this.DrawPoint(i, _y0, argb);
+            this.DrawPoint(i, _y1, argb);
+        }
         for (int i = _y0; i < _y1; i++)
-            if (this.type == ImageType.BITMAP)
-            {
-                img.SetPixel(i, _x0, argb);
-                img.SetPixel(i, _x1, argb);
-            }
+        {
+            this.DrawPoint(_x0, i, argb);
+            this.DrawPoint(_x1, i, argb);
+        }
+    }
+
+    public void DrawEllipse(int x0, int y0, int x1, int y1, ARGB argb)
+    {
+        if (x0 == x1 || y0 == y1)
+            return;
+        int a = Math.abs(x0 - x1) / 2;
+        int b = Math.abs(y0 - y1) / 2;
+        int xc = (x0 + x1) / 2;
+        int yc = (y0 + y1) / 2;
+        int sqa = a * a;
+        int sqb = b * b;
+        int x = 0;
+        int y = b;
+        int d = 2 * sqb - 2 * b * sqa + sqa;
+        int p = (int) ((double) sqa / Math.sqrt((double) (sqa + sqb)));
+        this.DrawPoint(xc + x, yc + y, argb);
+        this.DrawPoint(xc - x, yc + y, argb);
+        this.DrawPoint(xc + x, yc - y, argb);
+        this.DrawPoint(xc - x, yc - y, argb);
+        while (x <= p)
+        {
+            if (d < 0)
+                d += 2 * sqb * (2 * x + 3);
             else
             {
-                ((ColorImage) this.draw_obj).SetPixel(_x0, i, argb);
-                ((ColorImage) this.draw_obj).SetPixel(_x1, i, argb);
+                d += 2 * sqb * (2 * x + 3) - 4 * sqa * (y - 1);
+                y--;
             }
+            x++;
+            this.DrawPoint(xc + x, yc + y, argb);
+            this.DrawPoint(xc - x, yc + y, argb);
+            this.DrawPoint(xc + x, yc - y, argb);
+            this.DrawPoint(xc - x, yc - y, argb);
+        }
+        d = sqb * (x * x + x) + sqa * (y * y - y) - sqa * sqb;
+        while (y >= 0)
+        {
+            this.DrawPoint(xc + x, yc + y, argb);
+            this.DrawPoint(xc - x, yc + y, argb);
+            this.DrawPoint(xc + x, yc - y, argb);
+            this.DrawPoint(xc - x, yc - y, argb);
+            y--;
+            if (d < 0)
+            {
+                x++;
+                d = d - 2 * sqa * y - sqa + 2 * sqb * x + 2 * sqb;
+            }
+            else
+                d = d - 2 * sqa * y - sqa;
+        }
     }
 
     public void Fill(int x, int y, ARGB argb)
@@ -154,6 +192,15 @@ public class Draw
                 ys.push(_y + 1);
             }
         }
+    }
+
+    private void DrawPoint(int x, int y, ARGB argb)
+    {
+        ColorImage img = ((ColorImage) this.draw_obj);
+        if (this.type == ImageType.BITMAP)
+            img.SetPixel(y, x, argb);
+        else
+            img.SetPixel(x, y, argb);
     }
 
 }
