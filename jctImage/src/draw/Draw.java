@@ -20,7 +20,12 @@ public class Draw
 
     public Draw(BMP obj)
     {
-        this.draw_obj = obj;
+        LinkImage(obj);
+    }
+
+    public void LinkImage(BMP bmp)
+    {
+        this.draw_obj = bmp;
         this.type = ImageType.BMP;
     }
 
@@ -269,6 +274,11 @@ public class Draw
         }
     }
 
+    public void Fill(int x, int y, RGB rgb)
+    {
+        Fill(x, y, new ARGB(255, rgb.R, rgb.G, rgb.B));
+    }
+
     public void Fill(int x, int y, ARGB argb)
     {
         Stack<Integer> xs = new Stack<Integer>();
@@ -283,22 +293,22 @@ public class Draw
             int _x = xs.pop();
             int _y = ys.pop();
             this.DrawPoint(_x, _y, argb);
-            if (this.GetARGBPoint(_x - 1, _y) == old)
+            if (this.GetARGBPoint(_x - 1, _y).Equal(old))
             {
                 xs.push(_x - 1);
                 ys.push(_y);
             }
-            if (this.GetARGBPoint(_x, _y - 1) == old)
+            if (this.GetARGBPoint(_x, _y - 1).Equal(old))
             {
                 xs.push(_x);
                 ys.push(_y - 1);
             }
-            if (this.GetARGBPoint(_x + 1, _y) == old)
+            if (this.GetARGBPoint(_x + 1, _y).Equal(old))
             {
                 xs.push(_x + 1);
                 ys.push(_y);
             }
-            if (this.GetARGBPoint(_x, _y + 1) == old)
+            if (this.GetARGBPoint(_x, _y + 1).Equal(old))
             {
                 xs.push(_x);
                 ys.push(_y + 1);

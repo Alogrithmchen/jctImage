@@ -18,6 +18,14 @@ public class RGB
         this.B = b;
     }
 
+    public boolean Equal(RGB rgb)
+    {
+        if (this.R == rgb.R && this.G == rgb.G && this.B == rgb.B)
+            return true;
+        else
+            return false;
+    }
+
     public static RGB Black = new RGB(0, 0, 0);
     public static RGB White = new RGB(255, 255, 255);
     public static RGB Red = new RGB(255, 0, 0);

@@ -13,6 +13,19 @@ public class ARGB extends RGB
         this.B = b;
     }
 
+    public ARGB Clone()
+    {
+        return new ARGB(this.A, this.R, this.G, this.B);
+    }
+
+    public boolean Equal(ARGB argb)
+    {
+        if (this.A == argb.A && this.R == argb.R && this.G == argb.G && this.B == argb.B)
+            return true;
+        else
+            return false;
+    }
+
     public int ToInt()
     {
         return (R << 24) | (G << 16) | (B << 8) | A;
