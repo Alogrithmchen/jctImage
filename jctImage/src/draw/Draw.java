@@ -1,9 +1,12 @@
 package draw;
 
-import java.util.Stack;
 import image.BMP;
 import image.ColorImage;
+
+import java.util.Stack;
+
 import color.ARGB;
+import color.RGB;
 
 public class Draw
 {
@@ -19,6 +22,11 @@ public class Draw
     {
         this.draw_obj = obj;
         this.type = ImageType.BMP;
+    }
+
+    public void DrawLine(int x0, int y0, int x1, int y1, RGB rgb)
+    {
+        DrawLine(x0, y0, x1, y1, new ARGB(255, rgb.R, rgb.G, rgb.B));
     }
 
     public void DrawLine(int x0, int y0, int x1, int y1, ARGB argb)
@@ -70,6 +78,11 @@ public class Draw
         }
     }
 
+    public void DrawRectangle(int x0, int y0, int x1, int y1, RGB rgb)
+    {
+        DrawRectangle(x0, y0, x1, y1, new ARGB(255, rgb.R, rgb.G, rgb.B));
+    }
+
     public void DrawRectangle(int x0, int y0, int x1, int y1, ARGB argb)
     {
         int _x0, _y0, _x1, _y1;
@@ -105,6 +118,11 @@ public class Draw
         }
     }
 
+    public void DrawFilledRectangle(int x0, int y0, int x1, int y1, RGB rgb)
+    {
+        DrawFilledRectangle(x0, y0, x1, y1, new ARGB(255, rgb.R, rgb.G, rgb.B));
+    }
+
     public void DrawFilledRectangle(int x0, int y0, int x1, int y1, ARGB argb)
     {
         int _x0, _y0, _x1, _y1;
@@ -134,6 +152,11 @@ public class Draw
                 this.DrawPoint(i, j, argb);
                 this.DrawPoint(i, j, argb);
             }
+    }
+
+    public void DrawEllipse(int x0, int y0, int x1, int y1, RGB rgb)
+    {
+        DrawEllipse(x0, y0, x1, y1, new ARGB(255, rgb.R, rgb.G, rgb.B));
     }
 
     public void DrawEllipse(int x0, int y0, int x1, int y1, ARGB argb)
@@ -185,6 +208,11 @@ public class Draw
             else
                 d = d - 2 * sqa * y - sqa;
         }
+    }
+
+    public void DrawFilledEllipse(int x0, int y0, int x1, int y1, RGB rgb)
+    {
+        DrawFilledEllipse(x0, y0, x1, y1, new ARGB(255, rgb.R, rgb.G, rgb.B));
     }
 
     public void DrawFilledEllipse(int x0, int y0, int x1, int y1, ARGB argb)
