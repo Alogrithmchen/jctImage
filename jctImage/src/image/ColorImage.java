@@ -2,8 +2,10 @@ package image;
 
 import color.ARGB;
 
-public class ColorImage extends Image
+public class ColorImage
 {
+    protected int hight;
+    protected int width;
     protected ARGB matrix[][];
 
     public ColorImage()

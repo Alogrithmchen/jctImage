@@ -1,7 +1,7 @@
 package draw;
 
 import java.util.Stack;
-import image.Bitmap;
+import image.BMP;
 import image.ColorImage;
 import color.ARGB;
 
@@ -9,16 +9,16 @@ public class Draw
 {
     private enum ImageType
     {
-        BITMAP;
+        BMP;
     }
 
     private Object draw_obj;
     private ImageType type;
 
-    public Draw(Bitmap obj)
+    public Draw(BMP obj)
     {
         this.draw_obj = obj;
-        this.type = ImageType.BITMAP;
+        this.type = ImageType.BMP;
     }
 
     public void DrawLine(int x0, int y0, int x1, int y1, ARGB argb)
@@ -26,7 +26,7 @@ public class Draw
         int dx, dy;
         int sx, sy;
         int err, err2;
-        if (this.type != ImageType.BITMAP)
+        if (this.type != ImageType.BMP)
             return;
         ColorImage img = (ColorImage) draw_obj;
         dx = Math.abs(x1 - x0);
@@ -42,7 +42,7 @@ public class Draw
         err = dx - dy;
         while (true)
         {
-            if (this.type == ImageType.BITMAP)
+            if (this.type == ImageType.BMP)
                 img.SetPixel(y0, x0, argb);
             else
                 img.SetPixel(x0, y0, argb);
@@ -56,7 +56,7 @@ public class Draw
             }
             if (x0 == x1 && y0 == y1)
             {
-                if (this.type == ImageType.BITMAP)
+                if (this.type == ImageType.BMP)
                     img.SetPixel(y0, x0, argb);
                 else
                     img.SetPixel(x0, y0, argb);
@@ -243,7 +243,6 @@ public class Draw
 
     public void Fill(int x, int y, ARGB argb)
     {
-        ColorImage img = ((ColorImage) this.draw_obj);
         Stack<Integer> xs = new Stack<Integer>();
         Stack<Integer> ys = new Stack<Integer>();
         ARGB old = this.GetARGBPoint(x, y);
@@ -282,7 +281,7 @@ public class Draw
     private void DrawPoint(int x, int y, ARGB argb)
     {
         ColorImage img = ((ColorImage) this.draw_obj);
-        if (this.type == ImageType.BITMAP)
+        if (this.type == ImageType.BMP)
             img.SetPixel(y, x, argb);
         else
             img.SetPixel(x, y, argb);
@@ -291,7 +290,7 @@ public class Draw
     private ARGB GetARGBPoint(int x, int y)
     {
         ColorImage img = ((ColorImage) this.draw_obj);
-        if (this.type == ImageType.BITMAP)
+        if (this.type == ImageType.BMP)
             return img.GetPixel(y, x);
         else
             return img.GetPixel(x, y);

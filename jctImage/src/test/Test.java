@@ -1,6 +1,6 @@
 package test;
 
-import image.Bitmap;
+import image.BMP;
 import color.ARGB;
 import draw.Draw;
 
@@ -9,7 +9,7 @@ public class Test
 
     public static void main(String[] args)
     {
-        Bitmap bmp = new Bitmap(512, 256, ARGB.Black);
+        BMP bmp = new BMP(512, 256, ARGB.Black);
         Draw d = new Draw(bmp);
         d.DrawLine(50, 234, 12, 123, ARGB.Green);
         d.DrawLine(100, 23, 50, 234, ARGB.White);

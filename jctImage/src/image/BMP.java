@@ -5,15 +5,15 @@ import java.util.Arrays;
 
 import color.ARGB;
 
-public class Bitmap extends ColorImage
+public class BMP extends ColorImage
 {
 
-    public Bitmap(int h, int w)
+    public BMP(int h, int w)
     {
         Create(h, w);
     }
 
-    public Bitmap(int h, int w, ARGB argb)
+    public BMP(int h, int w, ARGB argb)
     {
         Create(h, w);
         InitColor(argb);
